@@ -1,0 +1,39 @@
+minikube start --driver=docker         # Start Minikube with Docker
+minikube status                        # Check Minikube status
+kubectl get nodes                      # Verify node is Ready
+
+docker build -t sandhya454/python-app:latest .      # Build Docker image
+docker push sandhya454/python-app:latest            # Push to Docker Hub
+kubectl apply -f pod.yaml              # Apply a single pod (used only for learning)
+kubectl apply -f deployment.yaml       # Apply deployment (for scaling & updating)
+kubectl apply -f service.yaml          # Create service to expose the app
+kubectl apply -f configmap.yaml        # Create ConfigMap
+kubectl apply -f secret.yaml           # Create Secret
+
+kubectl get pods                       # List all pods
+kubectl get deployments                # List deployments
+kubectl get svc                        # List services
+kubectl describe pod <pod-name>        # Detailed info about a pod
+kubectl logs <pod-name>                # View logs of a pod
+
+Access the App
+kubectl port-forward svc/flask-service 8095:80
+ Visit: http://localhost:8095
+0r
+minikube service flask-service
+
+Scaling the Appkubectl scale deployment flask-deployment --replicas=3
+kubectl get pods                             # Check multiple pods running
+
+cleanup commands
+kubectl delete pod <pod-name>               # Delete one pod
+kubectl delete deployment <deployment-name> # Delete a deployment
+kubectl delete all --all                    # Delete EVERYTHING (pods, svc, deploy, etc.)
+
+To Rebuild Updated Code
+
+docker build -t sandhya454/python-app:latest .
+docker push sandhya454/python-app:latest
+
+kubectl delete deployment flask-deployment
+kubectl apply -f deployment.yaml
